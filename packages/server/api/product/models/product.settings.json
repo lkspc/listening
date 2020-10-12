@@ -6,31 +6,42 @@
   },
   "options": {
     "increments": true,
-    "timestamps": true
+    "timestamps": true,
+    "draftAndPublish": true
   },
   "attributes": {
     "name": {
       "type": "string",
-      "unique": true,
-      "required": true
-    },
-    "preview": {
-      "model": "file",
-      "via": "related",
-      "allowedTypes": [
-        "images"
-      ],
-      "plugin": "upload",
       "required": true
     },
     "desc": {
       "type": "text"
     },
+    "thumb": {
+      "model": "file",
+      "via": "related",
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos"
+      ],
+      "plugin": "upload",
+      "required": false
+    },
+    "previews": {
+      "collection": "file",
+      "via": "related",
+      "allowedTypes": [
+        "images"
+      ],
+      "plugin": "upload",
+      "required": false
+    },
+    "detail": {
+      "type": "richtext"
+    },
     "price": {
-      "type": "integer",
-      "required": true,
-      "default": 0,
-      "min": 0
+      "type": "integer"
     },
     "quantity": {
       "type": "integer"

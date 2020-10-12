@@ -1,5 +1,5 @@
 {
-  "name": "my-project",
+  "name": "server",
   "private": true,
   "version": "0.1.0",
   "description": "A Strapi application",
@@ -11,15 +11,15 @@
   },
   "devDependencies": {},
   "dependencies": {
-    "strapi": "3.1.7",
-    "strapi-admin": "3.1.7",
-    "strapi-utils": "3.1.7",
-    "strapi-plugin-content-type-builder": "3.1.7",
-    "strapi-plugin-content-manager": "3.1.7",
-    "strapi-plugin-users-permissions": "3.1.7",
-    "strapi-plugin-email": "3.1.7",
-    "strapi-plugin-upload": "3.1.7",
-    "strapi-connector-bookshelf": "3.1.7",
+    "strapi": "3.2.3",
+    "strapi-admin": "3.2.3",
+    "strapi-utils": "3.2.3",
+    "strapi-plugin-content-type-builder": "3.2.3",
+    "strapi-plugin-content-manager": "3.2.3",
+    "strapi-plugin-users-permissions": "3.2.3",
+    "strapi-plugin-email": "3.2.3",
+    "strapi-plugin-upload": "3.2.3",
+    "strapi-connector-bookshelf": "3.2.3",
     "knex": "<0.20.0",
     "sqlite3": "latest"
   },
@@ -27,7 +27,7 @@
     "name": "A Strapi developer"
   },
   "strapi": {
-    "uuid": "6a859aa5-907c-46c3-9e1b-67e0e97a17c5"
+    "uuid": "19e2247a-ea0e-4630-8fb5-837f11bffba1"
   },
   "engines": {
     "node": ">=10.0.0",
