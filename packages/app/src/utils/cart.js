@@ -1,11 +1,12 @@
-import storage from "./storage";
+// @ts-nocheck
+import storage from './storage';
 
 export function getCart() {
   const defaultCart = {
     items: [],
     updated: Date.now(),
   };
-  const cart = storage.getItem("cart");
+  const cart = storage.getItem('cart');
   return cart || defaultCart;
 }
 
@@ -22,20 +23,25 @@ export function setCartBadge(count) {
   } else {
     badgeCount = count;
   }
-  uni.setTabBarBadge({
-    index: 1,
-    text: badgeCount.toString(),
-  });
+
+  if (badgeCount === 0) {
+    uni.removeTabBarBadge({ index: 1 });
+  } else {
+    uni.setTabBarBadge({
+      index: 1,
+      text: badgeCount.toString(),
+    });
+  }
 }
 
 export function addToCart(product, quantity = 1) {
   const cart = getCart();
-  const exists = cart.items.find((item) => item.id === product.id);
+  const exists = cart.items.find((item) => item._id === product._id);
   if (exists) {
     exists.quantity += quantity;
   } else {
     cart.items.push({
-      id: product.id,
+      id: product._id,
       name: product.name,
       thumb: product.thumb,
       price: product.price,
@@ -44,16 +50,16 @@ export function addToCart(product, quantity = 1) {
   }
 
   cart.updated = Date.now();
-  storage.setItem("cart", cart);
+  storage.setItem('cart', cart);
 }
 
 export function removeFromCart(id) {
   const cart = getCart();
-  cart.items = cart.items.filter((item) => item.id !== id);
+  cart.items = cart.items.filter((item) => item._id !== id);
   cart.updated = Date.now();
-  storage.setItem("cart", cart);
+  storage.setItem('cart', cart);
 }
 
 export function clearCart() {
-  storage.removeItem("cart");
+  storage.removeItem('cart');
 }

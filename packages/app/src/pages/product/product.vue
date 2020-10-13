@@ -51,7 +51,7 @@ export default {
   data() {
     return {
       loading: true,
-      id: "",
+      _id: "",
       name: "",
       desc: "",
       previews: [],
@@ -63,7 +63,7 @@ export default {
     async fetchData() {
       this.loading = true;
       try {
-        const product = await API.getProduct(this.id);
+        const product = await API.getProduct(this._id);
         this.loading = false;
         this.name = product.name;
         this.previews = product.previews;
@@ -79,7 +79,7 @@ export default {
     this.fetchData();
   },
   onLoad(params) {
-    this.id = params.id;
+    this._id = params._id;
   },
 };
 </script>

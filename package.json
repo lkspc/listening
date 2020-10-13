@@ -1,6 +1,11 @@
 {
   "name": "root",
   "private": true,
+  "scripts": {
+    "lerna": "lerna",
+    "server": "cd packages/server && yarn develop",
+    "app:h5": "cd packages/app && yarn dev:h5"
+  },
   "devDependencies": {
     "lerna": "^3.22.1"
   }

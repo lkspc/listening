@@ -3,9 +3,9 @@
     <view v-if="!hasNav" class="placeholder"></view>
     <view class="card">
       <swiper class="swiper" autoplay="true" circular="true">
-        <block v-for="ad in ads" :key="ad.id">
+        <block v-for="ad in ads" :key="ad._id">
           <swiper-item @tap="visit(ad)">
-            <image class="swiper-image" :src="ad.source"></image>
+            <image class="swiper-image" :src="ad.preview"></image>
           </swiper-item>
         </block>
         <swiper-item v-if="ads.length === 0" class="swiper-placeholder">
@@ -13,7 +13,7 @@
       </swiper>
     </view>
     <view class="list">
-      <block v-for="product in products" :key="product.id">
+      <block v-for="product in products" :key="product._id">
         <view class="list-item" @tap="goToProduct(product)">
           <image class="preview" :src="product.thumb"></image>
           <text class="name">{{ product.name }}</text>
@@ -32,9 +32,9 @@
 </template>
 
 <script>
-import * as API from "@/utils/api";
-import * as cart from "@/utils/cart";
-import * as common from "@/constants/common";
+import * as API from '@/utils/api';
+import * as cart from '@/utils/cart';
+import * as common from '@/constants/common';
 
 export default {
   data() {
@@ -42,7 +42,7 @@ export default {
       hasNav: common.HAS_NAV,
       page: 0,
       size: 10,
-      status: "more",
+      status: 'more',
       hasMore: true,
       ads: [],
       products: [],
@@ -59,7 +59,7 @@ export default {
     async fetchProducts(isReload) {
       try {
         const nextPage = (isReload ? 0 : this.page) + 1;
-        this.status = "loading";
+        this.status = 'loading';
         const data = await API.getProducts(nextPage, this.size + 1);
         if (isReload) {
           this.products = [];
@@ -70,9 +70,9 @@ export default {
         this.products = this.products.concat(data.slice(0, this.size));
         this.hasMore = data.length >= this.size + 1;
         this.page += 1;
-        this.status = this.hasMore ? "more" : "noMore";
+        this.status = this.hasMore ? 'more' : 'noMore';
       } catch (err) {
-        this.status = "more";
+        this.status = 'more';
         console.log(err);
       } finally {
         isReload && uni.stopPullDownRefresh();
@@ -81,20 +81,20 @@ export default {
     isInCurrentTab(route) {
       const pages = getCurrentPages();
       const [currentPage] = pages.slice(-1);
-      return route.startsWith(currentPage.route.replace(/\/index/g, ""));
+      return route.startsWith(currentPage.route.replace(/\/index/g, ''));
     },
     visit(ad) {
-      const { url } = ad;
-      if (!url) {
+      const { target } = ad;
+      if (!target) {
         return;
       }
 
-      const params = { url };
+      const params = { url: target };
       this.isInCurrentTab(url) ? uni.navigateTo(params) : uni.switchTab(params);
     },
     goToProduct(product) {
       uni.navigateTo({
-        url: "/pages/product/product?id=" + product.id,
+        url: '/pages/product/product?_id=' + product._id,
       });
     },
     addToCart(product) {

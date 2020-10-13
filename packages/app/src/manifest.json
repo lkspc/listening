@@ -1,6 +1,6 @@
 {
-  "name" : "Listening",
-  "appid" : "",
+  "name": "Listening",
+  "appid": "",
   "description": "",
   "versionName": "1.0.0",
   "versionCode": "100",
@@ -42,9 +42,11 @@
   },
   "quickapp": {},
   "mp-weixin": {
-    "appid": "",
+    "appid": "wxbe8b9d759f13128b",
     "setting": {
-      "urlCheck": true
+      "urlCheck": false,
+      "es6": false,
+      "useCompilerModule": true
     }
   }
 }
