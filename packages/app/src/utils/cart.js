@@ -1,12 +1,12 @@
 // @ts-nocheck
-import storage from './storage';
+import storage from "./storage";
 
 export function getCart() {
   const defaultCart = {
     items: [],
     updated: Date.now(),
   };
-  const cart = storage.getItem('cart');
+  const cart = storage.getItem("cart");
   return cart || defaultCart;
 }
 
@@ -41,7 +41,7 @@ export function addToCart(product, quantity = 1) {
     exists.quantity += quantity;
   } else {
     cart.items.push({
-      id: product._id,
+      _id: product._id,
       name: product.name,
       thumb: product.thumb,
       price: product.price,
@@ -50,16 +50,16 @@ export function addToCart(product, quantity = 1) {
   }
 
   cart.updated = Date.now();
-  storage.setItem('cart', cart);
+  storage.setItem("cart", cart);
 }
 
 export function removeFromCart(id) {
   const cart = getCart();
   cart.items = cart.items.filter((item) => item._id !== id);
   cart.updated = Date.now();
-  storage.setItem('cart', cart);
+  storage.setItem("cart", cart);
 }
 
 export function clearCart() {
-  storage.removeItem('cart');
+  storage.removeItem("cart");
 }

@@ -8,7 +8,7 @@
             <image class="swiper-image" :src="ad.preview"></image>
           </swiper-item>
         </block>
-        <swiper-item v-if="ads.length === 0" class="swiper-placeholder">
+        <swiper-item v-if="ads.length === 0" class="swiper-image">
         </swiper-item>
       </swiper>
     </view>
@@ -26,15 +26,20 @@
         </view>
       </block>
     </view>
-    <uni-load-more iconType="snow" :iconSize="20" :status="status">
+    <uni-load-more
+      iconType="snow"
+      :iconSize="20"
+      :status="status"
+      :contentText="content"
+    >
     </uni-load-more>
   </view>
 </template>
 
 <script>
-import * as API from '@/utils/api';
-import * as cart from '@/utils/cart';
-import * as common from '@/constants/common';
+import * as API from "@/utils/api";
+import * as cart from "@/utils/cart";
+import * as common from "@/constants/common";
 
 export default {
   data() {
@@ -42,10 +47,15 @@ export default {
       hasNav: common.HAS_NAV,
       page: 0,
       size: 10,
-      status: 'more',
+      status: "more",
       hasMore: true,
       ads: [],
       products: [],
+      content: {
+        contentnomore: "没有更多了",
+        contentdown: "上拉显示更多",
+        contentrefresh: "正在加载...",
+      },
     };
   },
   methods: {
@@ -59,8 +69,8 @@ export default {
     async fetchProducts(isReload) {
       try {
         const nextPage = (isReload ? 0 : this.page) + 1;
-        this.status = 'loading';
-        const data = await API.getProducts(nextPage, this.size + 1);
+        this.status = "loading";
+        const data = await API.getProducts(nextPage, this.size);
         if (isReload) {
           this.products = [];
           this.page = 0;
@@ -68,11 +78,11 @@ export default {
         }
 
         this.products = this.products.concat(data.slice(0, this.size));
-        this.hasMore = data.length >= this.size + 1;
+        this.hasMore = data.length > this.size;
         this.page += 1;
-        this.status = this.hasMore ? 'more' : 'noMore';
+        this.status = this.hasMore ? "more" : "noMore";
       } catch (err) {
-        this.status = 'more';
+        this.status = "more";
         console.log(err);
       } finally {
         isReload && uni.stopPullDownRefresh();
@@ -81,7 +91,7 @@ export default {
     isInCurrentTab(route) {
       const pages = getCurrentPages();
       const [currentPage] = pages.slice(-1);
-      return route.startsWith(currentPage.route.replace(/\/index/g, ''));
+      return route.startsWith(currentPage.route.replace(/\/index/g, ""));
     },
     visit(ad) {
       const { target } = ad;
@@ -94,7 +104,7 @@ export default {
     },
     goToProduct(product) {
       uni.navigateTo({
-        url: '/pages/product/product?_id=' + product._id,
+        url: "/pages/product/product?_id=" + product._id,
       });
     },
     addToCart(product) {
@@ -141,12 +151,6 @@ export default {
 }
 
 .swiper-image {
-  width: 100%;
-  height: 100%;
-  border-radius: 20rpx;
-}
-
-.swiper-placeholder {
   width: 100%;
   height: 100%;
   border-radius: 20rpx;
